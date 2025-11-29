@@ -1,0 +1,111 @@
+
+
+# MERN Trello Backend
+
+A backend service built with **MERN stack** (MongoDB, Express.js, Node.js) for managing teams and a task board with columns: **TODO → DOING → DONE**. This project includes authentication, team management, task management, activity logging, caching, rate limiting, and API documentation.
+
+---
+<!-- Postman Api Request -->
+URL for Postman published documentation :-
+
+https://documenter.getpostman.com/view/44663291/2sB3dLUBdz
+
+---
+
+## Folder Structure
+
+```
+src/
+├─ config/
+├─ controllers/
+├─ middleware/
+├─ models/
+├─ routes/
+├─ jobs/
+├─ utils/
+└─ app.js
+```
+
+---
+
+## Installation & Running Locally
+
+1. Clone the repository:
+
+   <!-- ```bash -->
+   git clone https://github.com/amandadhwal/Treello_Backend_Services.git
+   cd backend
+   <!-- ``` -->
+2. Install dependencies:
+
+   <!-- ```bash -->
+   npm install
+   <!-- ``` -->
+3. Copy `.env.example` to `.env` and update values.
+4. Start MongoDB
+
+5. Start the server:
+
+   <!-- ```bash -->
+   npm run dev
+   <!-- ``` -->
+
+
+
+---
+
+## Features
+
+* **User Authentication**: Register, login with JWT, hashed passwords, protected routes.
+* **Team Management**: Create teams, add/remove members, view members (creator-only restrictions).
+* **Task Board**: Create, update, delete tasks; move between columns; assign tasks; comment on tasks.
+* **Caching**: Redis caching for team task lists with invalidation on updates.
+* **Rate Limiting**: Protect login and activity endpoints.
+* **Error Handling**: Meaningful HTTP status codes and messages.
+* **API Documentation**: Swagger/OpenAPI or Postman collection.
+
+## API Endpoints (Overview)
+
+* **Auth**
+
+  * `POST /api/auth/register` — Register new user
+  * `POST /api/auth/login` — Login
+* **Teams**
+
+  * `POST /api/teams` — Create team
+  * `POST /api/teams/:teamId/members` — Add member (creator only)
+  * `DELETE /api/teams/:teamId/members` — Remove member (creator only)
+  * `GET /api/teams/:teamId/members` — List members
+* **Tasks**
+
+  * `POST /api/teams/:teamId/tasks` — Create task
+  * `GET /api/teams/:teamId/tasks` — List tasks (cached, pagination, search, filter)
+  * `PUT /api/teams/:teamId/tasks/:taskId` — Update task
+  * `DELETE /api/teams/:teamId/tasks/:taskId` — Delete task
+  * `POST /api/teams/:teamId/tasks/:taskId/move` — Move task
+  * `POST /api/teams/:teamId/tasks/:taskId/assign` — Assign task
+  * `POST /api/teams/:teamId/tasks/:taskId/comments` — Comment on task
+* **Activity**
+
+  * `GET /api/teams/:teamId/activities` — Get activities (rate limited)
+
+---
+
+## Technologies Used
+
+* **Backend**: Node.js, Express.js
+* **Database**: MongoDB (Mongoose ODM)
+* **Authentication**: JWT
+* **Rate Limiting**: express-rate-limit
+* **Documentation**: Swagger/OpenAPI
+
+---
+
+## Future Improvements
+
+* Add refresh tokens for JWT authentication.
+* Implement multi-document transactions for atomic operations.
+* Add unit & integration tests (Jest + Supertest).
+* Enhance caching strategy and consider Redis cluster for production.
+* Add role-based access control for finer permissions.
+
